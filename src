@@ -1,3 +1,7 @@
+from sys import argv
+
+script, filename = argv
+
 def get_position(string):
 	#returns the location for every '/' character within the string
 	counter = 0
