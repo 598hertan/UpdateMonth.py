@@ -1,67 +1,43 @@
+#!/usr/bin/python2
+
 from sys import argv
-
 script, filename = argv
+"""
+DESCRIPTION: Run Python with a text file of dates and the text file will be replaced with an updated list of dates (incrementing the month by one)
+09/03/2015
+"""
 
-def get_position(string):
-	#returns the location for every '/' character within the string
-	counter = 0
-	position = []
-	
-	for i in string:
-		if i == "/":
-			position.append(counter)
-			counter = counter + 1
-		else:
-			counter = counter + 1
-	
-	return position
-	
-def get_month(string):
-	#returns the month using the get_position outputs
-	position = get_position(string)
-	month = string[0:position[0]]
-	return month
-	
-def get_year(string):
-	#returns the year using the get_position outputs
-	position = get_position(string)
-	year = string[position[1]+1:len(string)]
-	return year
-	
 def update_month(string):
-	#converts a date string to an integer, increments the month by one, then converts it back to a string 
-	new_month = int(get_month(string)) + 1
-	month_position = get_position(string)
-	
-	#exception handling for conversion from Dec to Jan so it updates the month and year
-	new_year = int(get_year(string))
+	new_month = int(string.split("/")[0]) + 1   #takes the month, increments the month by one
+	new_year = int(string.split("/")[2])       
 	
 	if new_month == 13:
 		new_month = 1
-		new_year = new_year + 1
-		return str(new_month) + string[month_position[0]:month_position[1]+1] + str(new_year) +"\n" #Why do I need \n ???
-	elif new_month > 13:
-		return "XX" + string[month_position[0]:len(string)] 
+		new_year += 1
+		return str(new_month) + "/" + string.split("/")[1] + "/" + str(new_year)
+	elif new_month > 13: 
+		return "XX" + "/" + string.split("/")[1] + "/" + str(new_year)
 	else:
 		new_month = str(new_month)
-		return new_month + string[month_position[0]:len(string)]
+		return new_month + "/" + string.split("/")[1] + "/" + str(new_year)
 	
-def update_dates(list):
-	#takes in a list and outputs a revised list with updated months
+def update_dates(list): #takes in a list and outputs a revised list with updated months
 	new_list = []
-	
+
 	for i in list:
 		item = update_month(i)
 		new_list.append(item)
+		
+	return "\n".join(new_list)
 
-	return "".join(new_list)
-
-#open the file, create a list of dates, prints the updated months list
-with open(filename, "r") as filehandle:
+with open(filename, "r") as filehandle: #open the file, create a list of dates, prints the updated months list
 	indata = filehandle.readlines()
 	print update_dates(indata)
 
-#output the list of dates with the updated months
-with open(filename, "w") as filehandle:
+with open(filename, "w") as filehandle: #output the list of dates with the updated months
 	filehandle.write(update_dates(indata))
 	filehandle.close()
+
+def main():
+	print "End UpdateMonth.py"
+if __name__ == "__main__": main()
