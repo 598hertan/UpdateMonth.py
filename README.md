@@ -1,6 +1,6 @@
 UpdateMonth.py
 ==============
-DESCRIPTION: Run script with a text file of dates to output an updated list of dates with the next incremental month.
+DESCRIPTION: Run the src script with a text file of dates to output an updated list of dates with the next incremental month.
 
 $ python UpdatePython.py dates.txt
 
