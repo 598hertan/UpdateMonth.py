@@ -1,43 +1,56 @@
-#!/usr/bin/python2
+#!/usr/bin/python35
 
 from sys import argv
-script, filename = argv
+
 """
-DESCRIPTION: Run Python with a text file of dates and the text file will be replaced with an updated list of dates (incrementing the month by one)
+Author: James Hertan
 09/03/2015
+
+DESCRIPTION: Run Python with a text file of dates and the text file will be replaced with an updated list of dates (incrementing the month by one)
 """
 
 def update_month(string):
-	new_month = int(string.split("/")[0]) + 1   #takes the month, increments the month by one
-	new_year = int(string.split("/")[2])       
-	
-	if new_month == 13:
-		new_month = 1
-		new_year += 1
-		return str(new_month) + "/" + string.split("/")[1] + "/" + str(new_year)
-	elif new_month > 13: 
-		return "XX" + "/" + string.split("/")[1] + "/" + str(new_year)
-	else:
-		new_month = str(new_month)
-		return new_month + "/" + string.split("/")[1] + "/" + str(new_year)
-	
-def update_dates(list): #takes in a list and outputs a revised list with updated months
-	new_list = []
+    """
+    Input string in MM/DD/YYYY format
+    Returns an updated string incrementing the month by 1
+    """
 
-	for i in list:
-		item = update_month(i)
-		new_list.append(item)
-		
-	return "\n".join(new_list)
+    new_month = int(string.split("/")[0]) + 1  # takes the month, increments the month by one
+    new_year = int(string.split("/")[2])
 
-with open(filename, "r") as filehandle: #open the file, create a list of dates, prints the updated months list
-	indata = filehandle.readlines()
-	print update_dates(indata)
+    if new_month == 13:
+        new_month = 1
+        new_year += 1
+        return str(new_month) + "/" + string.split("/")[1] + "/" + str(new_year)
+    elif new_month > 13:
+        return "XX" + "/" + string.split("/")[1] + "/" + str(new_year)
+    else:
+        new_month = str(new_month)
+        return new_month + "/" + string.split("/")[1] + "/" + str(new_year)
 
-with open(filename, "w") as filehandle: #output the list of dates with the updated months
-	filehandle.write(update_dates(indata))
-	filehandle.close()
+def update_dates(list):
+    """takes a list of months and outputs a revised list with updated months"""
+    new_list = []
+
+    for i in list:
+        item = update_month(i)
+        new_list.append(item)
+
+    return "\n".join(new_list)
 
 def main():
-	print "End UpdateMonth.py"
+    if len(argv) == 2:
+        script, filename = argv
+        #print(script)
+    else:
+        filename = 'compare.txt'
+
+    with open(filename, "r") as fh:  # open the file, create a list of dates, prints the updated months list
+        indata = fh.readlines()
+        print(update_dates(indata))
+
+    with open(filename, "w") as fh:  # output the list of dates with the updated months
+        fh.write(update_dates(indata))
+
+
 if __name__ == "__main__": main()
