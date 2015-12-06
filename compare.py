@@ -32,6 +32,8 @@ def main():
             filehandle.write(find_match(indata1, indata2))
             filehandle.close()
 
+        print("{} create".format(file3))
+
     else:
         print("You did not identify 2 files to compare and a file to output.")
 
