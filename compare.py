@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 from sys import argv
 script, file1, file2, file3 = argv
 
