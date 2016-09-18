@@ -16,17 +16,16 @@ def update_month(string):
     """
 
     new_month = int(string.split("/")[0]) + 1  # takes the month, increments the month by one
+    new_day = int(string.split("/")[1])
     new_year = int(string.split("/")[2])
+
 
     if new_month == 13:
         new_month = 1
         new_year += 1
-        return str(new_month) + "/" + string.split("/")[1] + "/" + str(new_year)
-    elif new_month > 13:
-        return "XX" + "/" + string.split("/")[1] + "/" + str(new_year)
-    else:
-        new_month = str(new_month)
-        return new_month + "/" + string.split("/")[1] + "/" + str(new_year)
+
+    return str(new_month) + "/" + str(new_day) + "/" + str(new_year)
+
 
 def update_dates(list):
     """takes a list of months and outputs a revised list with updated months"""
@@ -43,9 +42,9 @@ def main():
         script, filename = argv
         #print(script)
     else:
-        filename = 'compare.txt'
+        filename = 'dates.txt'
 
-    with open(filename, "r") as fh:  # open the file, create a list of dates, prints the updated months list
+    with open(filename, "r+") as fh:  # open the file, create a list of dates, prints the updated months list
         indata = fh.readlines()
         print(update_dates(indata))
 
