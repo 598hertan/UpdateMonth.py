@@ -38,18 +38,23 @@ def update_dates(list):
     return "\n".join(new_list)
 
 def main():
+
     if len(argv) == 2:
         script, filename = argv
         #print(script)
     else:
         filename = 'dates.txt'
 
-    with open(filename, "r+") as fh:  # open the file, create a list of dates, prints the updated months list
-        indata = fh.readlines()
-        print(update_dates(indata))
 
-    with open(filename, "w") as fh:  # output the list of dates with the updated months
-        fh.write(update_dates(indata))
+    try:
+        with open(filename, "r+") as fh:  # open the file, create a list of dates, prints the updated months list
+            indata = fh.readlines()
+            print(update_dates(indata))
+    except FileNotFoundError:
+        print("{} not found!".format(filename))
+    else:
+        with open(filename, "w") as fh:  # output the list of dates with the updated months
+            fh.write(update_dates(indata))
 
 
 if __name__ == "__main__": main()
