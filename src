@@ -6,13 +6,12 @@ from sys import argv
 Author: James Hertan
 09/03/2015
 
-DESCRIPTION: Run Python with a text file of dates and the text file will be replaced with an updated list of dates (incrementing the month by one)
+DESCRIPTION: Open a text file of dates, read the list of dates, update the list of dates by incrementing the month by one.
 """
 
 def update_month(string):
     """
-    Input string in MM/DD/YYYY format
-    Returns an updated string incrementing the month by 1
+    Input a string in MM/DD/YYYY format; Returns an updated string incrementing the month by 1
     """
 
     new_month = int(string.split("/")[0]) + 1  # takes the month, increments the month by one
@@ -28,7 +27,7 @@ def update_month(string):
 
 
 def update_dates(list):
-    """takes a list of months and outputs a revised list with updated months"""
+    """takes a list of dates and outputs a revised list with updated months"""
     new_list = []
 
     for i in list:
@@ -37,24 +36,29 @@ def update_dates(list):
 
     return "\n".join(new_list)
 
+def generate_dates_file(file_name):
+    """
+    :param file_name: Takes a file with a list of dates
+    :return: verwrites the file with an updated list of dates increment the month by 1
+    """
+    try:
+        with open(file_name, "r+") as fh:  # open the file, create a list of dates, prints the updated months list
+            indata = fh.readlines()
+            print(update_dates(indata))
+    except FileNotFoundError:
+        print("{} not found!".format(file_name))
+    else:
+        with open(file_name, "w") as fh:  # output the list of dates with the updated months
+            fh.write(update_dates(indata))
+
 def main():
 
     if len(argv) == 2:
         script, filename = argv
-        #print(script)
     else:
         filename = 'dates.txt'
 
-
-    try:
-        with open(filename, "r+") as fh:  # open the file, create a list of dates, prints the updated months list
-            indata = fh.readlines()
-            print(update_dates(indata))
-    except FileNotFoundError:
-        print("{} not found!".format(filename))
-    else:
-        with open(filename, "w") as fh:  # output the list of dates with the updated months
-            fh.write(update_dates(indata))
+    generate_dates_file(filename)
 
 
 if __name__ == "__main__": main()
