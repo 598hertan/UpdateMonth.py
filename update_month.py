@@ -7,6 +7,7 @@ Date:   09/25/2017
 DESCRIPTION:
 Copy of src.py
 """
+import sys
 import pyperclip
 
 
@@ -56,7 +57,7 @@ def generate_dates_file(file_name):
 
 
 def main():
-    if len(argv) == 2:
+    if len(sys.argv) == 2:
         script, filename = argv
     else:
         filename = 'dates.txt'

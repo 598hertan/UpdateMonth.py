@@ -8,6 +8,7 @@ Author: James Hertan
 
 DESCRIPTION: Open a text file of dates, read the list of dates, update the list of dates by incrementing the month by one.
 """
+from sys import argv
 import pyperclip
 
 def update_month(string):
