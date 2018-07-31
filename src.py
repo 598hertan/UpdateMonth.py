@@ -38,6 +38,7 @@ def update_dates(list):
 
 def generate_dates_file(file_name):
     """
+    NOT USED
     :param file_name: Takes a file with a list of dates
     :return: rewrites the file with an updated list of dates increment the month by 1
     """
@@ -54,13 +55,31 @@ def generate_dates_file(file_name):
         with open(file_name, "w") as fh:  # opens the file, writes the updated list of dates
             fh.write(new_dates)
 
+def print_dates(my_l):
+    """Print a list of dates to the terminal"""
+    for date in my_l:
+        print(date)
+
+def get_updated_dates():
+    """Primary program: Takes the clipboard and generates a new list of dates with an incremented month to copy to the clipboard"""
+
+    updated_content = []
+    content = pyperclip.paste()
+    # print(content)
+
+    for date in content.split("\n"):
+        try:
+            # print(date)
+            new_date = update_month(date)
+            # print("New date {}".format(new_date))
+            updated_content.append(new_date)
+        except ValueError:
+            print("Try again. Copy a list of dates.")
+
+    print_dates(updated_content)
+    pyperclip.copy("\n".join(updated_content))
+
 def main():
-
-    if len(argv) == 2:
-        script, filename = argv
-    else:
-        filename = 'dates.txt'
-
-    generate_dates_file(filename)
+    get_updated_dates()
     
 if __name__ == "__main__": main()
