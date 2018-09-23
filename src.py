@@ -74,7 +74,7 @@ def get_updated_dates():
             # print("New date {}".format(new_date))
             updated_content.append(new_date)
         except ValueError:
-            print("Try again. Copy a list of dates.")
+            print("Skipping '{}'.Program failed to recognize this value.".format(str(date)))
 
     print_dates(updated_content)
     pyperclip.copy("\n".join(updated_content))
